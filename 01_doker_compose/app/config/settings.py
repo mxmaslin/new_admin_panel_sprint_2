@@ -8,12 +8,6 @@ include('components/database.py',)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
-print('yay ' * 1000)
-p = BASE_DIR.glob('**/*')
-print(dotenv_values())
-for file in p:
-    if file.is_file():
-        print(file)
 
 ENV_FILE = BASE_DIR.joinpath()
 
