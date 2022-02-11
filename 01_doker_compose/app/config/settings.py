@@ -1,19 +1,28 @@
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, dotenv_values
 from pathlib import Path
 from split_settings.tools import include
-
-load_dotenv()
 
 include('components/database.py',)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
+print('yay ' * 1000)
+p = BASE_DIR.glob('**/*')
+print(dotenv_values())
+for file in p:
+    if file.is_file():
+        print(file)
+
+ENV_FILE = BASE_DIR.joinpath()
+
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = os.getenv('DEBUG', True)
 
-ALLOWED_HOSTS = ('127.0.0.1',)
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split()
+
 INTERNAL_IPS = ('127.0.0.1',)
 
 INSTALLED_APPS = (
