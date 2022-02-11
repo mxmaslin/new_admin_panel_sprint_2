@@ -9,8 +9,9 @@ RUN apk update \
 
 RUN pip install --upgrade pip
 
-COPY ./app/requirements.txt ./app/create_superuser.sh ./
+COPY ./app/requirements.txt ./app/entrypoint.sh ./app/create_superuser.sh ./
 
+RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh && chmod +x /usr/src/app/entrypoint.sh
 RUN sed -i 's/\r$//g' /usr/src/app/create_superuser.sh && chmod +x /usr/src/app/create_superuser.sh
 
 RUN pip install -r requirements.txt

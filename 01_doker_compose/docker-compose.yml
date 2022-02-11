@@ -7,8 +7,7 @@ services:
       dockerfile: ./docker/web/Dockerfile
     container_name: backend
     command: sh -c '
-      python manage.py flush --no-input &&
-      python manage.py migrate &&
+      ./entrypoint.sh &&
       ./create_superuser.sh &&
       python manage.py runserver 0.0.0.0:8000'
     volumes:
