@@ -1,8 +1,5 @@
-FROM postgres:13-alpine3.15
+FROM postgres:13.5
 
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
-
-ADD ./movies_database.sql /docker-entrypoint-initdb.d
+COPY ./movies_database.sql /docker-entrypoint-initdb.d/movies_database.sql
 
 COPY . .
