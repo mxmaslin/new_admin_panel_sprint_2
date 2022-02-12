@@ -2,19 +2,19 @@
 -- \copy (select * from content.film_work) to '/output.csv' with csv
 -- \copy content.film_work from '/output.csv' with delimiter ',';
 
-drop schema if exists content cascade;
-drop database if exists movies_database;
-drop role if exists app;
-
-drop index if exists film_work_idx;
-drop index if exists person_idx;
-drop index if exists genre_name_idx;
-drop index if exists person_film_work_idx;
+-- drop schema if exists content cascade;
+-- drop database if exists movies_database;
+-- drop role if exists app;
+--
+-- drop index if exists film_work_idx;
+-- drop index if exists person_idx;
+-- drop index if exists genre_name_idx;
+-- drop index if exists person_film_work_idx;
 
 create extension if not exists "uuid-ossp";
 
-create database movies_database;
-\c "movies_database";
+-- create database movies_database;
+-- \c movies_database;
 create schema content;
 set search_path to content, public;
 create role app with login;
