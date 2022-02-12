@@ -29,7 +29,7 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      - ./app/movies_database.sql:/docker-entrypoint-initdb.d/movies_database.sql
+      - ./app/movies_database.ddl:/docker-entrypoint-initdb.d/movies_database.ddl
     ports:
       - '5432:5432'
     env_file:
