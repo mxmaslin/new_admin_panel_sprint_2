@@ -1,4 +1,4 @@
--- psql -h 127.0.0.1 -U postgres -f movies_database.ddl
+-- psql -h 127.0.0.1 -U postgres -f movies_database.sql
 -- \copy (select * from content.film_work) to '/output.csv' with csv
 -- \copy content.film_work from '/output.csv' with delimiter ',';
 
@@ -17,7 +17,7 @@ create extension if not exists "uuid-ossp";
 -- \c movies_database;
 create schema content;
 set search_path to content, public;
-create role app with login;
+-- create role app with login;
 grant all privileges on database movies_database to app;
 alter role app set search_path to content, public;
 
