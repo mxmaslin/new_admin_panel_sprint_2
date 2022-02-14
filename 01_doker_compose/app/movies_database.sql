@@ -4,7 +4,6 @@ create extension if not exists "uuid-ossp";
 
 create schema content;
 set search_path to content, public;
--- create role app with login;
 grant all privileges on database movies_database to app;
 alter role app set search_path to content, public;
 
