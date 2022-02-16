@@ -16,4 +16,6 @@ RUN sed -i 's/\r$//g' /usr/src/app/create_superuser.sh && chmod +x /usr/src/app/
 
 RUN pip install -r requirements.txt
 
+RUN mkdir -p /gunicorn/
+
 COPY . .
