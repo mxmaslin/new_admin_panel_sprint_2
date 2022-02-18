@@ -55,8 +55,8 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
     class Meta:
         db_table = "content\".\"film_work"
         verbose_name = _('Filmwork')
-        ordering = ['title', 'creation_date']
         verbose_name_plural = _('1. Filmworks')
+        ordering = ['title', 'creation_date']
         indexes = (
             models.Index(
                 name="film_work_idx",
@@ -85,6 +85,7 @@ class Person(UUIDMixin, TimeStampedMixin):
         db_table = "content\".\"person"
         verbose_name = _('Person')
         verbose_name_plural = _('2. Persons')
+        ordering = ['full_name']
         indexes = (
             models.Index(
                 name="person_idx",
@@ -160,6 +161,7 @@ class GenreFilmwork(UUIDMixin):
         Genre, on_delete=models.CASCADE, verbose_name=_('Genres')
     )
     created = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
 
     class Meta:
         db_table = "content\".\"genre_film_work"
