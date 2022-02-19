@@ -45,9 +45,9 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
         'Genre', through='GenreFilmwork', verbose_name=_('Genres')
     )
     persons = models.ManyToManyField(
-        'Person', through='PersonFilmwork', blank=True
+        'Person', through='PersonFilmwork', blank=True,
+        verbose_name=_('Persons')
     )
-
     objects = models.Manager()
 
     def __str__(self):
