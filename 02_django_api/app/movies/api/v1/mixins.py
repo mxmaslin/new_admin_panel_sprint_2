@@ -21,8 +21,4 @@ class MoviesApiMixin(ABC):
         count, page, is_paginated, queryset = [
             x[1] for x in self.get_queryset().items()
         ]
-        serialized = serializers.serialize('json', queryset)
-        context = {
-            'results': serialized,
-        }
-        return context
+        return {'results': list(queryset.values())}

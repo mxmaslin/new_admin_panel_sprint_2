@@ -47,6 +47,7 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
     persons = models.ManyToManyField(
         'Person', through='PersonFilmwork', blank=True
     )
+
     objects = models.Manager()
 
     def __str__(self):
@@ -74,9 +75,6 @@ class Person(UUIDMixin, TimeStampedMixin):
 
     full_name = models.CharField(
         max_length=255, verbose_name=_('Full name')
-    )
-    film_works = models.ManyToManyField(
-        Filmwork, through='PersonFilmwork', blank=True
     )
     gender = models.TextField(_('gender'), choices=Gender.choices, null=True)
     objects = models.Manager()
@@ -142,15 +140,15 @@ class PersonFilmwork(UUIDMixin):
     class Meta:
         db_table = "content\".\"person_film_work"
         unique_together = ('person', 'film_work', 'role',)
-        indexes = (
-            models.Index(
-                name='person_film_work_idx',
-                fields=('person_id', 'film_work_id', 'role'),
-            ),
-        )
-
-    def __str__(self):
-        return f'{str(self.film_work)}: {str(self.person)}: {self.role}'
+    #     indexes = (
+    #         models.Index(
+    #             name='person_film_work_idx',
+    #             fields=('person_id', 'film_work_id', 'role'),
+    #         ),
+    #     )
+    #
+    # def __str__(self):
+    #     return f'{str(self.film_work)}: {str(self.person)}: {self.role}'
 
 
 class GenreFilmwork(UUIDMixin):
@@ -165,12 +163,12 @@ class GenreFilmwork(UUIDMixin):
 
     class Meta:
         db_table = "content\".\"genre_film_work"
-        indexes = (
-            models.Index(
-                name='genre_film_work_idx',
-                fields=('film_work_id', 'genre_id', 'created'),
-            ),
-        )
+        # indexes = (
+        #     models.Index(
+        #         name='genre_film_work_idx',
+        #         fields=('film_work_id', 'genre_id', 'created'),
+        #     ),
+        # )
 
-    def __str__(self):
-        return f'{str(self.film_work)}: {str(self.genre)}'
+    # def __str__(self):
+    #     return f'{str(self.film_work)}: {str(self.genre)}'
