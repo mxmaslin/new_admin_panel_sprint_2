@@ -3,7 +3,7 @@ from django.db.models import Q, Count
 from django.views.generic.list import BaseListView
 from django.views.generic.detail import BaseDetailView
 
-from ...models import GenreFilmwork
+from ...models import PersonFilmwork, GenreFilmwork
 
 from .mixins import MoviesApiMixin
 
@@ -13,10 +13,25 @@ class MoviesListApi(MoviesApiMixin, BaseListView):
 
     def get_queryset(self):
         queryset = self.model.objects.all().annotate(
-            movie_persons=ArrayAgg('persons')
+            actors=ArrayAgg(
+                'persons__full_name',
+                filter=Q(personfilmwork__role=PersonFilmwork.RoleChoices.ACTOR),
+                distinct=True
+            ),
+            directors=ArrayAgg(
+                'persons__full_name',
+                filter=Q(
+                    personfilmwork__role=PersonFilmwork.RoleChoices.DIRECTOR),
+                distinct=True
+            ),
+            writers=ArrayAgg(
+                'persons__full_name',
+                filter=Q(
+                    personfilmwork__role=PersonFilmwork.RoleChoices.WRITER),
+                distinct=True
+            ),
+            genres=ArrayAgg('genre__name', distinct=True)
         ).order_by('title')
-        # for v in queryset.values():
-        #     print(v['movie_genres'], type(v['movie_genres']))
 
         paginator, page, queryset, is_paginated = self.paginate_queryset(
             queryset,

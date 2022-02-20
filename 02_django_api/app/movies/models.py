@@ -41,7 +41,7 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
         max_length=10, default=_('Movie'), choices=MovieTypeChoices.choices,
         verbose_name=_('Type')
     )
-    genres = models.ManyToManyField(
+    genre = models.ManyToManyField(
         'Genre', through='GenreFilmwork', verbose_name=_('Genres')
     )
     persons = models.ManyToManyField(
@@ -123,7 +123,7 @@ class PersonFilmwork(UUIDMixin):
     class RoleChoices(models.TextChoices):
         ACTOR = 'actor', _('Actor')
         DIRECTOR = 'director', _('Director')
-        PRODUCER = 'producer', _('Producer')
+        WRITER = 'writer', _('Writer')
 
     person = models.ForeignKey(
         Person, on_delete=models.CASCADE, verbose_name=_('Persons')
@@ -132,7 +132,7 @@ class PersonFilmwork(UUIDMixin):
         Filmwork, on_delete=models.CASCADE, verbose_name=_('Film works')
     )
     role = models.CharField(
-        default=_(RoleChoices.ACTOR), max_length=200, choices=RoleChoices.choices
+        max_length=200, choices=RoleChoices.choices, null=True
     )
     created = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
@@ -140,15 +140,15 @@ class PersonFilmwork(UUIDMixin):
     class Meta:
         db_table = "content\".\"person_film_work"
         unique_together = ('person', 'film_work', 'role',)
-    #     indexes = (
-    #         models.Index(
-    #             name='person_film_work_idx',
-    #             fields=('person_id', 'film_work_id', 'role'),
-    #         ),
-    #     )
-    #
-    # def __str__(self):
-    #     return f'{str(self.film_work)}: {str(self.person)}: {self.role}'
+        indexes = (
+            models.Index(
+                name='person_film_work_idx',
+                fields=('person_id', 'film_work_id', 'role'),
+            ),
+        )
+
+    def __str__(self):
+        return f'{str(self.film_work)}: {str(self.person)}: {self.role}'
 
 
 class GenreFilmwork(UUIDMixin):
@@ -163,12 +163,12 @@ class GenreFilmwork(UUIDMixin):
 
     class Meta:
         db_table = "content\".\"genre_film_work"
-        # indexes = (
-        #     models.Index(
-        #         name='genre_film_work_idx',
-        #         fields=('film_work_id', 'genre_id', 'created'),
-        #     ),
-        # )
+        indexes = (
+            models.Index(
+                name='genre_film_work_idx',
+                fields=('film_work_id', 'genre_id', 'created'),
+            ),
+        )
 
-    # def __str__(self):
-    #     return f'{str(self.film_work)}: {str(self.genre)}'
+    def __str__(self):
+        return f'{str(self.film_work)}: {str(self.genre)}'

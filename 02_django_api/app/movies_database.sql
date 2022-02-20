@@ -67,6 +67,6 @@ on content.person_film_work(person_id, film_work_id, role);
 create index genre_film_work_idx
 on content.genre_film_work(film_work_id, genre_id);
 
--- alter table person_film_work alter column role drop not null;
 create type gender as enum ('male', 'female');
 alter table person add column "gender" gender null;
+alter table person_film_work alter column role drop not null;

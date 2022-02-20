@@ -31,9 +31,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
       - ./app/movies_database.sql:/docker-entrypoint-initdb.d/movies_database.sql
     ports:
-      - '5435:5432'
-    expose:
-      - '5435'
+      - '5432:5432'
     env_file:
       - ./app/.env
 
