@@ -1,3 +1,5 @@
+import json
+
 from abc import ABC, abstractmethod
 
 from django.core import serializers
@@ -15,10 +17,11 @@ class MoviesApiMixin(ABC):
         pass
 
     def render_to_response(self, context, **response_kwargs):
-        return JsonResponse(context)
+        return JsonResponse({'results': context})
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        count, page, is_paginated, queryset = [
-            x[1] for x in self.get_queryset().items()
-        ]
-        return {'results': list(queryset.values())}
+        queryset = self.get_queryset()
+        from django.core.serializers.json import DjangoJSONEncoder
+        serialized = json.dumps(list(queryset), cls=DjangoJSONEncoder)
+        serialized = json.loads(serialized)
+        return serialized
