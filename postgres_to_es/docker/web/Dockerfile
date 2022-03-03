@@ -9,7 +9,7 @@ RUN apk update \
 
 RUN pip install --upgrade pip --no-cache-dir
 
-COPY ./app/requirements.txt ./app/start.sh ./app/entrypoint.sh ./app/create_superuser.sh ./sqlite_to_postgres ./
+COPY ./app/requirements.txt ./app/start.sh ./app/entrypoint.sh ./app/create_superuser.sh ./sqlite_to_postgres/ ./
 
 RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh && chmod +x /usr/src/app/entrypoint.sh
 RUN sed -i 's/\r$//g' /usr/src/app/create_superuser.sh && chmod +x /usr/src/app/create_superuser.sh
