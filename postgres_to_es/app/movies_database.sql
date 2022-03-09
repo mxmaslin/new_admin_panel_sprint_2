@@ -7,6 +7,11 @@ set search_path to content, public;
 grant all privileges on database movies_database to app;
 alter role app set search_path to content, public;
 
+create role etl with password '123qwe';
+alter role etl with login;
+grant all privileges on all tables in schema public to etl;
+grant all privileges on all tables in schema content to etl;
+alter role etl set search_path to content, public;
 
 create table if not exists content.film_work (
     id uuid primary key,
