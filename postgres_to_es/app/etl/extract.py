@@ -1,13 +1,13 @@
 import logging
-import os
+# import os
 import psycopg2
 
 # from psycopg2.extras import DictCursor
 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 
-load_dotenv('../app/.env')
+# load_dotenv('../app/.env')
 
 Log_Format = '%(levelname)s %(asctime)s - %(message)s'
 logging.basicConfig(
@@ -113,23 +113,15 @@ schema = [
 # return mapping[aggregate_this]
 
 
-def extract(prev, now):
-    dsl = {
-        'dbname': os.getenv('POSTGRES_DB'),
-        'user': os.getenv('POSTGRES_USER'),
-        'password': os.getenv('POSTGRES_PASSWORD'),
-        'host': os.getenv('POSTGRES_HOST'),
-        'port': 5432
-    }
-    with psycopg2.connect(**dsl) as pg_conn:
-        query = 'select * from content.film_work;'
-        # query = "SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema'"
-        cursor = pg_conn.cursor()
-        try:
-            cursor.execute(query)
-        except Exception as e:
-            logger.exception(e)
-        fetched = cursor.fetchall()
-        for entry in fetched:
-            print('yay ' * 10)
-            print(entry)
+def extract(conn, prev, now):
+    query = 'select * from content.film_work;'
+    # query = "SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema'"
+    cursor = conn.cursor()
+    try:
+        cursor.execute(query)
+    except Exception as e:
+        logger.exception(e)
+    fetched = cursor.fetchall()
+    for entry in fetched:
+        print('yay ' * 10)
+        print(entry)
