@@ -6,7 +6,7 @@ services:
     container_name: backend
     volumes:
       - ./app/:/usr/src/app/
-      - static_volume:/usr/src/app/staticfiles
+      - static_volume:/usr/src/app/staticfiles/
       - gunicorn_socket:/gunicorn/
     env_file:
       - ./app/.env

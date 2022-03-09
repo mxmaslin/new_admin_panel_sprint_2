@@ -28,9 +28,9 @@ class FilmworkAdmin(admin.ModelAdmin):
         'title', 'creation_date', 'rating', 'created', 'modified',
     )
     search_fields = ('title', 'creation_date',)
-    list_filter = ('type', 'genres')
+    list_filter = ('type', 'genre')
     inlines = (PersonFilmworkInline, GenreFilmworkInline, )
-    list_prefetch_related = ('genres', 'persons')
+    list_prefetch_related = ('genre', 'persons')
 
 
 class PersonAdmin(admin.ModelAdmin):

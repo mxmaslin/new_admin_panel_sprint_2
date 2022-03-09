@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from ...models import Filmwork, Person, Genre, PersonFilmwork, GenreFilmwork
+from ...models import Filmwork, Person, Genre, PersonFilmwork
 
 
 class Command(BaseCommand):
@@ -14,7 +14,7 @@ class Command(BaseCommand):
         pomelo = Person.objects.create(full_name='Pomelo Underdog',
                                        gender=Person.Gender.FEMALE)
         leo = Person.objects.create(full_name='Leo Dikaprio',
-                                     gender=Person.Gender.MALE)
+                                    gender=Person.Gender.MALE)
 
         romcom = Genre.objects.create(name='Romcom')
         sitcom = Genre.objects.create(name='Sitcom')
@@ -33,12 +33,12 @@ class Command(BaseCommand):
         )
         PersonFilmwork.objects.create(
             person=bred, film_work=star_wars,
-            role=PersonFilmwork.RoleChoices.ACTOR
+            role=PersonFilmwork.RoleChoices.WRITER
         )
-        PersonFilmwork.objects.create(
-            person=leo, film_work=star_wars,
-            role=PersonFilmwork.RoleChoices.ACTOR
-        )
+        # PersonFilmwork.objects.create(
+        #     person=leo, film_work=star_wars,
+        #     role=PersonFilmwork.RoleChoices.ACTOR
+        # )
 
         titanic = Filmwork.objects.create(
             title='Titanic', creation_date='2000-12-01',

@@ -45,8 +45,7 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
         'Genre', through='GenreFilmwork', verbose_name=_('Genres')
     )
     persons = models.ManyToManyField(
-        'Person', through='PersonFilmwork', blank=True,
-        verbose_name=_('Persons')
+        'Person', through='PersonFilmwork', blank=True
     )
     objects = models.Manager()
 
@@ -56,8 +55,8 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
     class Meta:
         db_table = "content\".\"film_work"
         verbose_name = _('Filmwork')
-        verbose_name_plural = _('1. Filmworks')
         ordering = ['title', 'creation_date']
+        verbose_name_plural = _('1. Filmworks')
         indexes = (
             models.Index(
                 name="film_work_idx",
@@ -76,6 +75,9 @@ class Person(UUIDMixin, TimeStampedMixin):
     full_name = models.CharField(
         max_length=255, verbose_name=_('Full name')
     )
+    film_works = models.ManyToManyField(
+        Filmwork, through='PersonFilmwork', blank=True
+    )
     gender = models.TextField(_('gender'), choices=Gender.choices, null=True)
     objects = models.Manager()
 
@@ -83,7 +85,6 @@ class Person(UUIDMixin, TimeStampedMixin):
         db_table = "content\".\"person"
         verbose_name = _('Person')
         verbose_name_plural = _('2. Persons')
-        ordering = ['full_name']
         indexes = (
             models.Index(
                 name="person_idx",
@@ -132,7 +133,7 @@ class PersonFilmwork(UUIDMixin):
         Filmwork, on_delete=models.CASCADE, verbose_name=_('Film works')
     )
     role = models.CharField(
-        max_length=200, choices=RoleChoices.choices, null=True
+        default=_(RoleChoices.ACTOR), max_length=200, choices=RoleChoices.choices
     )
     created = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
@@ -159,7 +160,6 @@ class GenreFilmwork(UUIDMixin):
         Genre, on_delete=models.CASCADE, verbose_name=_('Genres')
     )
     created = models.DateTimeField(auto_now_add=True)
-    objects = models.Manager()
 
     class Meta:
         db_table = "content\".\"genre_film_work"

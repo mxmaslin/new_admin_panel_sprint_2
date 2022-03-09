@@ -1,5 +1,5 @@
-from django.contrib.postgres.aggregates import ArrayAgg
-from django.db.models import Q
+from django.contrib.postgres.aggregates import ArrayAgg, StringAgg, JSONBAgg
+from django.db.models import Q, F, Func, Value, CharField, JSONField
 from django.views.generic.list import BaseListView
 from django.views.generic.detail import BaseDetailView
 
@@ -27,7 +27,7 @@ def get_aggregation(aggregate_this):
                 personfilmwork__role=PersonFilmwork.RoleChoices.WRITER),
             distinct=True
         ),
-        'genres': ArrayAgg('genre__name', distinct=True),
+        'genres': ArrayAgg('genre__name', distinct=True)
     }
     return mapping[aggregate_this]
 
@@ -40,7 +40,7 @@ class MoviesListApi(MoviesApiMixin, BaseListView):
             actors=get_aggregation('actors'),
             directors=get_aggregation('directors'),
             writers=get_aggregation('writers'),
-            genres=get_aggregation('genres'),
+            genres=get_aggregation('genres')
         ).order_by('title')
         return queryset
 
@@ -65,6 +65,6 @@ class MoviesDetailApi(MoviesApiMixin, BaseDetailView):
             actors=get_aggregation('actors'),
             directors=get_aggregation('directors'),
             writers=get_aggregation('writers'),
-            genres=get_aggregation('genres'),
+            genres=get_aggregation('genres')
         ).order_by('title')
         return queryset

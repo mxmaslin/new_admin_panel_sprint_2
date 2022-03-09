@@ -41,7 +41,7 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
         max_length=10, default=_('Movie'), choices=MovieTypeChoices.choices,
         verbose_name=_('Type')
     )
-    genres = models.ManyToManyField(
+    genre = models.ManyToManyField(
         'Genre', through='GenreFilmwork', verbose_name=_('Genres')
     )
     persons = models.ManyToManyField(
